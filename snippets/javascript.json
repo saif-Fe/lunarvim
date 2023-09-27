@@ -1,0 +1,40 @@
+
+{
+  "useState Snippet": {
+    "prefix": "state",
+    "body": ["const [$1, set$2$1] = useState($0);"],
+    "description": "add a useState hook"
+  },
+  "console Snippet": {
+    "prefix": "log",
+    "body": ["console.log($1, '$1')"],
+    "description": "add a console.log"
+  },
+  "image export": {
+    "prefix": "!e",
+    "body": ["export { default as $1 } from '../assets/images/$1.png'"],
+    "description": "add a console.log"
+  },
+  "funtional Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react';",
+      "import classes from './$1.module.css';",
+      "import {Container, Row, Col} from 'react-bootstrap'",
+      "import Header from '../../Components/Header'",
+      "import Footer from '../../Components/Footer'",
+      " ",
+      "export default function $1(){",
+      "return <>",
+      "<Header/>",
+      "<main className={classes.main}>",
+      "<Container>",
+      "$0",
+      "</Container>",
+      "</main>",
+      "<Footer/>",
+      "</>",
+      "}"
+    ]
+  }
+}
