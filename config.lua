@@ -11,8 +11,7 @@ vim.opt.relativenumber = true -- relative line numbers
 vim.opt.shell = "pwsh.exe -NoLogo"
 vim.opt.mouse = ''
 vim.opt.shellcmdflag =
-
-  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldmethod = "expr"
 
@@ -28,7 +27,7 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("x", "<Space>p", [["_dP]])
-vim.keymap.set({"n", "v"}, "<Space>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<Space>d", [["_d]])
 
 -- Move to previous/next
 map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
@@ -66,45 +65,30 @@ vim.cmd [[
 		set shellquote= shellxquote=
   ]]
 lvim.plugins = {
-  {
-    'kvrohit/mellow.nvim', name = 'mellow'
-  },
-  {
-    "rktjmp/lush.nvim",
-  },
-{'bkad/camelcasemotion'},
-  {
-    "tpope/vim-surround",
-  },
+  { 'bkad/camelcasemotion' },
+  { "tpope/vim-surround", },
   { "tpope/vim-repeat" },
   {
     "nacro90/numb.nvim",
     event = "BufRead",
     config = function()
-    require("numb").setup {
-      show_numbers = true,
-      show_cursorline = true,
-    }
-    end,
-  },
-  {
-    "ggandor/leap.nvim",
-    name = "leap",
-    config = function()
-      require("leap").add_default_mappings()
+      require("numb").setup {
+        show_numbers = true,
+        show_cursorline = true,
+      }
     end,
   },
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
+        RGB = true,      -- #RGB hex codes
+        RRGGBB = true,   -- #RRGGBB hex codes
         RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        rgb_fn = true,   -- CSS rgb() and rgba() functions
+        hsl_fn = true,   -- CSS hsl() and hsla() functions
+        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
       })
     end,
   },
@@ -142,9 +126,10 @@ lvim.plugins = {
       },
     },
   },
-{'romgrk/barbar.nvim',
+  {
+    'romgrk/barbar.nvim',
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
     init = function() vim.g.barbar_auto_setup = false end,
@@ -250,18 +235,20 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   {
     command = "prettier",
-    filetypes = {"css", "javascript", "javascriptreact","typescript", "typescriptreact" },
+    filetypes = { "css", "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 local emmet_options = {
   capabilities = capabilities,
   filetypes = {
     "html",
     "javascriptreact",
-    "css"
+    "css",
   },
-  root_dir = function ()
+  root_dir = function()
     return vim.loop.cwd()
   end
 }
